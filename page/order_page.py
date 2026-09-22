@@ -2,7 +2,6 @@ from page.base_page import BasePage
 from data import Urls
 import allure
 from locators.order_page_locators import OrderFormLocators as OFL
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 

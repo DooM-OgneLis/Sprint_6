@@ -1,1 +1,0 @@
-{"uuid": "854b0def-ea14-4137-8d77-e57d11945c4f", "befores": [{"name": "click_method_name", "status": "passed", "start": 1790118529396, "stop": 1790118529397}], "afters": [{"name": "click_method_name::<lambda>", "start": 1790118530961}], "start": 1790118529396, "stop": 1790118530961}
