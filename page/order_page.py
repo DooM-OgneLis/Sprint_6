@@ -1,14 +1,21 @@
 from page.base_page import BasePage
 from data import Urls
+import allure
 from locators.order_page_locators import OrderFormLocators as OFL
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 
 class OrderPage(BasePage):
 
-    def url_start_set(self):
+    @allure.step("Установить стартовый URL страницы заказа")
+    def set_start_url(self):
         self.url_start(Urls.ORDER_PAGE_URL)
-    
+
+    @allure.step(
+        "Заполнить первую страницу формы заказа: "
+        "ФИО={first_name} {second_name}, адрес={address}, метро={metro}, телефон={phone}"
+    )
     def write_one_page_in_form(self, first_name, second_name, address, metro, phone):
         self.find_element_with_wait(OFL.INPUT_FIRST_NAME).send_keys(first_name)
         self.find_element_with_wait(OFL.INPUT_LAST_NAME).send_keys(second_name)
@@ -21,6 +28,10 @@ class OrderPage(BasePage):
         self.find_element_with_wait(OFL.INPUT_PHONE_NUMBER).send_keys(phone)
         self.click_element_with_wait(OFL.BUTTON_NEXT_ORDER)
 
+    @allure.step(
+        "Заполнить вторую страницу формы заказа: дата={date_order}, длительность={duration_text}, "
+        "цвета(черный, серый)={color}, комментарий={comment}"
+    )
     def write_two_page_in_form(self, date_order, duration_text, color, comment):
 
         self.find_element_with_wait(OFL.INPUT_DATE_ORDER).send_keys(date_order)
@@ -36,11 +47,19 @@ class OrderPage(BasePage):
         self.find_element_with_wait(OFL.INPUT_COMMENT).send_keys(comment)
         self.click_element_with_wait(OFL.BUTTON_ORDER)
 
-        self.click_element_with_wait(OFL.BUTTON_ACCEPT_ORDER)
-
+    @allure.step("Подтвердить заказ в модальном окне")
     def accept_order(self):
         self.find_element_with_wait(OFL.ORDER_MODAL)
         self.click_element_with_wait(OFL.BUTTON_ACCEPT_ORDER)
-    
+
+    @allure.step("Дождаться появления заголовка следующей страницы заказа")
     def wait_next_pages_order(self):
         self.find_element_with_wait(OFL.NAME_PAGE_ORDER)
+
+    @allure.step("Проверить, открыто ли окно подтверждения создания заказа")
+    def is_open_windows_order_complieted(self):
+        try:
+            self.wait.until(EC.visibility_of_element_located(OFL.ORDER_CREATED_INFORMATION))
+            return True
+        except TimeoutException:
+            return False
