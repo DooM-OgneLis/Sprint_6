@@ -31,3 +31,6 @@ class OrderFormLocators:
     #информационные блоки для подтверждения теста
     ORDER_MODAL = (By.CLASS_NAME, "Order_Modal__YZ-d3")
     ORDER_CREATED_INFORMATION = (By.XPATH, "//div[text() = 'Заказ оформлен']")
+
+    #макеты вызовов
+    DROPDOWN_OPTION_TEMPLATE = "//div[contains(@class, 'Dropdown-option') and normalize-space()='{}']"

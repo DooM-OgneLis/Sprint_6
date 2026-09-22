@@ -22,8 +22,7 @@ class OrderPage(BasePage):
         self.find_element_with_wait(OFL.INPUT_ADDRES).send_keys(address)
         self.find_element_with_wait(OFL.INPUT_METRO_STATION).send_keys(metro)
 
-        option = self.wait.until(EC.element_to_be_clickable(OFL.LIST_METRO_STATION))
-        option.click()
+        self.click_element_with_wait(OFL.LIST_METRO_STATION)
 
         self.find_element_with_wait(OFL.INPUT_PHONE_NUMBER).send_keys(phone)
         self.click_element_with_wait(OFL.BUTTON_NEXT_ORDER)
@@ -37,9 +36,8 @@ class OrderPage(BasePage):
         self.find_element_with_wait(OFL.INPUT_DATE_ORDER).send_keys(date_order)
         self.click_element_with_wait(OFL.NAME_PAGE_ORDER)
         self.click_element_with_wait(OFL.INPUT_LENGTH_ORDER)
-        target_locator = (By.XPATH, f"//div[contains(@class, 'Dropdown-option') and normalize-space()='{duration_text}']")
-        target_option = self.wait.until(EC.element_to_be_clickable(target_locator))
-        target_option.click()
+        target_locator = self.get_dropdown_option_locator(duration_text)
+        self.click_element_with_wait(target_locator)
         if color[0]:
             self.click_element_with_wait(OFL.CHECKBOX_COLOR_BLACK)
         if color[1]:
@@ -56,10 +54,15 @@ class OrderPage(BasePage):
     def wait_next_pages_order(self):
         self.find_element_with_wait(OFL.NAME_PAGE_ORDER)
 
+
+    def get_dropdown_option_locator(self, duration_text: str):
+        xpath = OFL.DROPDOWN_OPTION_TEMPLATE.format(duration_text)
+        return By.XPATH, xpath
+    
     @allure.step("Проверить, открыто ли окно подтверждения создания заказа")
     def is_open_windows_order_complieted(self):
         try:
-            self.wait.until(EC.visibility_of_element_located(OFL.ORDER_CREATED_INFORMATION))
+            self.find_element_with_wait(OFL.ORDER_CREATED_INFORMATION)
             return True
         except TimeoutException:
             return False

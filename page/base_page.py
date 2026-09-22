@@ -49,16 +49,14 @@ class BasePage:
     def find_all_elements(self, locator):
         return self.wait.until(EC.presence_of_all_elements_located(locator))
 
-    @allure.step("Клик по кнопке заказа с индексом (0 - кнопка в чердаке, 1 - в теле домашней странице): {element}")
-    def click_on_order_button(self, element):
-        buttons = self.find_all_elements(BPL.BUTTON_ORDER)
-        self.scroll_to_element(buttons[element])
-        self.click_element_with_wait(buttons[element])
+    @allure.step("Клик по кнопке заказа на чердаке страницы")
+    def click_on_order_button_head(self):
+        self.click_element_with_wait(BPL.BUTTON_ORDER_HEAD)
 
     @allure.step("Клик по логотипу Яндекса")
     def click_on_yandex_logo(self):
         self.click_element_with_wait(BPL.LOGO_YANDEX_HREF)
 
     @allure.step("Клик по логотипу Scooter")
-    def click_on_Scooter_logo(self):
+    def click_on_scooter_logo(self):
         self.click_element_with_wait(BPL.LOGO_SCOOTER_HREF)   
