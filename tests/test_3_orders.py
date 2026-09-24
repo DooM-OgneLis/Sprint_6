@@ -3,9 +3,6 @@ from page.home_page import HomePage
 from page.order_page import OrderPage
 import pytest
 
-@allure.title("проверка выполнения регистрации заказа")
-@allure.description("страница заказа → заполнить поля пеервой страницы -> нажать 'далее' -> заполнить вторую страницу -> нажать на кнопку 'Заказать' -> подтвердить заказ нажатием 'Да'."
-                    "Появилось информационное табло с номером заказа.")
 class TestOrders:
 
     @allure.title("проверка выполнения регистрации заказа")

@@ -53,7 +53,7 @@ class OrderPage(BasePage):
     def wait_next_pages_order(self):
         self.find_element_with_wait(OFL.NAME_PAGE_ORDER)
 
-
+    @allure.step("получить элемент из списка с ключом текстом {duration_text}")
     def get_dropdown_option_locator(self, duration_text: str):
         xpath = OFL.DROPDOWN_OPTION_TEMPLATE.format(duration_text)
         return By.XPATH, xpath

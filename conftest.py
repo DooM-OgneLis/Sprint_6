@@ -1,11 +1,12 @@
 import pytest
 import generator
-from data import Const
+from data import Const, Urls
 from selenium import webdriver
 
 @pytest.fixture(scope="function")
 def driver():
     driver = webdriver.Firefox()
+    driver.get(Urls.HOME_PAGE_URL)
     yield driver
     driver.quit()
 

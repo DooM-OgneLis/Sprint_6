@@ -45,10 +45,6 @@ class BasePage:
     def scroll_to_element(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element)
 
-    @allure.step("Найти все элементы по локатору")
-    def find_all_elements(self, locator):
-        return self.wait.until(EC.presence_of_all_elements_located(locator))
-
     @allure.step("Клик по кнопке заказа на чердаке страницы")
     def click_on_order_button_head(self):
         self.click_element_with_wait(BPL.BUTTON_ORDER_HEAD)
